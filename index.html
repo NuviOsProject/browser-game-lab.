@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Browser Game Lab</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #0b1020;
+      color: #f4f6ff;
+      font: 16px Arial, sans-serif;
+    }
+    header {
+      padding: 24px 18px;
+      background: #141d35;
+      border-bottom: 1px solid #2c3856;
+    }
+    main { max-width: 760px; margin: auto; padding: 22px; }
+    h1 { margin: 0 0 8px; font-size: 26px; }
+    p { line-height: 1.6; color: #bdc8df; }
+    .panel {
+      background: #141d35;
+      border: 1px solid #2c3856;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 18px 0;
+    }
+    input, button {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      margin-top: 12px;
+      font-size: 16px;
+    }
+    input { background: #0b1020; color: white; border: 1px solid #405071; }
+    button {
+      background: #7c5cff; color: white; border: 0;
+      font-weight: bold; cursor: pointer;
+    }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+    .result {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      line-height: 1.7;
+      color: #e0e7ff;
+    }
+    .note { font-size: 14px; }
+    .tag { color: #a996ff; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎮 Browser Game Lab</h1>
+    <p>Seu laboratório experimental de jogos no navegador.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Enviar jogo</h2>
+      <p>
+        Selecione um arquivo EXE ou ZIP do seu dispositivo.
+        A análise será feita localmente no navegador.
+      </p>
+      <input id="gameFile" type="file"
+             accept=".exe,.zip,.7z,.rar,.jsdos">
+      <button id="analyze" disabled>Analisar arquivo</button>
+    </section>
+
+    <section class="panel">
+      <h2>Resultado da análise</h2>
+      <div id="result" class="result">
+        Aguardando um arquivo...
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Como funciona</h2>
+      <p>1. Escolha o arquivo do jogo.</p>
+      <p>2. O sistema verifica informações básicas.</p>
+      <p>3. Uma futura versão poderá encaminhar jogos
+         compatíveis para um emulador adequado.</p>
+      <p class="note">
+        Segurança: não execute arquivos desconhecidos.
+        Esta página não envia nem executa o arquivo.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const picker = document.getElementById("gameFile");
+    const button = document.getElementById("analyze");
+    const output = document.getElementById("result");
+
+    picker.addEventListener("change", () => {
+      button.disabled = !picker.files.length;
+      output.textContent = picker.files.length
+        ? "Arquivo selecionado: " + picker.files[0].name
+        : "Aguardando um arquivo...";
+    });
+
+    button.addEventListener("click", async () => {
+      const file = picker.files[0];
+      if (!file) return;
+
+      output.textContent = "Analisando arquivo...";
+      const info = [
+        "Arquivo: " + file.name,
+        "Tamanho: " + (file.size / 1024 / 1024).toFixed(2) + " MB",
+        "Tipo informado pelo navegador: " + (file.type || "desconhecido"),
+        ""
+      ];
+
+      const extension = file.name.split(".").pop().toLowerCase();
+
+      if (file.size === 0) {
+        info.push("Resultado: arquivo vazio.");
+      } else if (extension === "exe") {
+        const header = new Uint8Array(
+          await file.slice(0, 64).arrayBuffer()
+        );
+
+        const isMZ = header[0] === 0x4d && header[1] === 0x5a;
+
+        info.push("Assinatura MZ: " + (isMZ ? "encontrada" : "não encontrada"));
+
+        if (isMZ) {
+          info.push("Formato provável: executável DOS/Windows.");
+          const view = new DataView(header.buffer);
+          const peOffset = view.getUint32(0x3c, true);
+
+          info.push("Offset do cabeçalho PE: " + peOffset);
+          info.push("");
+          info.push("Compatibilidade:");
+          info.push("• Não é possível concluir só pelo EXE se o jogo roda na web.");
+          info.push("• Jogos DOS podem funcionar com um emulador como js-dos.");
+          info.push("• Jogos modernos de Windows podem exigir PC remoto.");
+          info.push("• Dependências, gráficos, DRM e antitrapaça precisam ser avaliados.");
+        } else {
+          info.push("O arquivo não parece ter o cabeçalho EXE esperado.");
+        }
+      } else if (extension === "jsdos") {
+        info.push("Bundle js-dos detectado pelo nome.");
+        info.push("Próximo passo: integrar um player js-dos compatível.");
+      } else if (extension === "zip") {
+        info.push("Arquivo compactado detectado.");
+        info.push("Esta versão ainda não extrai nem analisa o conteúdo ZIP.");
+        info.push("A próxima etapa será validar o conteúdo e identificar os arquivos.");
+      } else {
+        info.push("Formato detectado pela extensão: ." + extension);
+        info.push("Ainda não existe um executor integrado para esse formato.");
+      }
+
+      info.push("");
+      info.push("Nenhum arquivo foi executado ou enviado para um servidor.");
+      output.textContent = info.join("\n");
+    });
+  </script>
+</body>
+</html>
