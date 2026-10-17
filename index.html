@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080a10">
+<meta name="description" content="Nuvi Games Import — biblioteca de jogos e preparação para execução no navegador.">
+<title>Nuvi Games Import</title>
+<style>
+:root{color-scheme:dark;--bg:#080a10;--panel:#10141e;--panel2:#151b28;--line:#252d3d;--text:#f3f6ff;--muted:#9ba6bc;--blue:#4e8cff;--cyan:#56e5ff;--purple:#a36bff;--green:#62e6ad;--amber:#ffc46b;--red:#ff7189}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 75% -20%,#182343 0,transparent 48%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+a{color:inherit;text-decoration:none}.app{min-height:100vh}.topbar{height:70px;border-bottom:1px solid #202637;background:#080a10ed;backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,54px);position:sticky;top:0;z-index:10}
+.brand{display:flex;gap:11px;align-items:center;font-weight:850;letter-spacing:.3px}.logo{height:38px;width:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#192c51,#211439);border:1px solid #34496d;box-shadow:inset 0 0 20px #397dff20;color:var(--cyan);font-size:20px}.brand small{display:block;font-size:10px;color:#8b9bb8;letter-spacing:2.2px;font-weight:700}.top-actions{display:flex;gap:10px;align-items:center}.status-pill,.chip{border:1px solid var(--line);background:#121723;border-radius:999px;padding:7px 11px;color:var(--muted);font-size:12px}.status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:7px;box-shadow:0 0 12px #62e6ad80}
+.layout{display:grid;grid-template-columns:224px minmax(0,1fr);max-width:1500px;margin:auto}.sidebar{border-right:1px solid #202637;min-height:calc(100vh - 70px);padding:24px 14px;position:sticky;top:70px;height:calc(100vh - 70px)}.nav-label{font-size:10px;color:#65728b;letter-spacing:1.8px;font-weight:800;padding:14px 12px 8px}.nav{display:grid;gap:5px}.nav button{display:flex;gap:12px;align-items:center;border:1px solid transparent;border-radius:10px;background:transparent;color:#aab4c9;text-align:left;padding:11px 12px}.nav button.active,.nav button:hover{background:#171d2a;border-color:#2c3850;color:white}.nav .ico{width:20px;text-align:center;color:#8c9bb7}.side-note{position:absolute;bottom:22px;left:14px;right:14px;border:1px solid var(--line);border-radius:12px;padding:13px;background:linear-gradient(145deg,#121a2a,#11101b);font-size:12px;color:var(--muted)}.side-note strong{color:#e9edff;display:block;margin-bottom:4px}
+main{padding:clamp(20px,4vw,48px);min-width:0}.hero{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:30px}.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:2.4px;text-transform:uppercase}.hero h1{font-size:clamp(29px,4vw,46px);line-height:1.1;letter-spacing:-1.5px;margin:9px 0 12px}.hero p{max-width:670px;color:var(--muted);margin:0}.hero-mark{width:110px;height:110px;flex:0 0 auto;border-radius:26px;border:1px solid #283d62;background:radial-gradient(circle at 50% 45%,#234b7b,#14152a 66%);display:grid;place-items:center;font-size:46px;color:var(--cyan);box-shadow:0 0 55px #376cff15}
+.section{margin-top:30px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:14px}.section h2{font-size:19px;margin:0;letter-spacing:-.3px}.sub{font-size:12px;color:var(--muted);margin-top:3px}.button{border:1px solid #35425b;background:#171e2c;color:#f4f7ff;padding:10px 14px;border-radius:10px;font-weight:700;transition:.18s}.button:hover{border-color:#5b84d4;transform:translateY(-1px)}.button.primary{background:linear-gradient(105deg,#276be8,#6846d7);border-color:#5c83ed;box-shadow:0 7px 24px #3c5fe526}.button.ghost{background:transparent}.button.small{font-size:12px;padding:7px 10px}.button:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.dropzone{border:1px dashed #3b5278;border-radius:18px;background:linear-gradient(120deg,#111a2b,#121322);padding:28px;text-align:center;position:relative;overflow:hidden}.dropzone:before{content:"";position:absolute;width:250px;height:250px;border-radius:50%;background:#2878ff0a;left:calc(50% - 125px);top:-160px;pointer-events:none}.dropzone.drag{border-color:var(--cyan);background:#112136}.upload-icon{width:54px;height:54px;border-radius:16px;margin:0 auto 12px;background:#1b2c48;border:1px solid #2f4c77;display:grid;place-items:center;font-size:24px;color:var(--cyan)}.dropzone h3{margin:0 0 6px;font-size:17px}.dropzone p{margin:0 auto 16px;max-width:600px;color:var(--muted);font-size:13px}.formats{display:flex;justify-content:center;flex-wrap:wrap;gap:7px;margin-top:14px}.formats span{font-size:11px;color:#aebbd2;border:1px solid #293448;background:#0d111a;padding:4px 8px;border-radius:6px}.hidden{display:none!important}
+.notice{margin-top:13px;border:1px solid #51402a;background:#1d1913;color:#d7c3a2;padding:12px 14px;border-radius:10px;font-size:12px}.notice strong{color:#ffe1a5}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}.stat{background:#10141e;border:1px solid var(--line);border-radius:13px;padding:15px}.stat span{display:block;font-size:11px;color:var(--muted)}.stat strong{font-size:24px;letter-spacing:-.6px;display:block;margin-top:5px}.stat em{font-style:normal;font-size:11px;color:#8794ad}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.search{flex:1;min-width:180px;position:relative}.search input{width:100%;border:1px solid var(--line);background:#10141e;border-radius:10px;padding:11px 13px 11px 37px;color:var(--text)}.search:before{content:"⌕";position:absolute;left:13px;top:5px;font-size:22px;color:#8492ad}.filter{border:1px solid var(--line);background:#10141e;border-radius:10px;padding:10px;color:#d7deee;max-width:100%}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.game-card{border:1px solid var(--line);background:linear-gradient(155deg,#141a27,#0e1119);border-radius:14px;overflow:hidden;min-width:0}.game-art{height:112px;display:grid;place-items:center;position:relative;background:radial-gradient(ellipse at 50% 80%,#2855a055,transparent 60%),linear-gradient(135deg,#17243a,#151327);border-bottom:1px solid #252c3c}.game-art .big-icon{font-size:39px;filter:drop-shadow(0 0 16px #54caff35)}.game-art .type{position:absolute;top:10px;left:10px}.game-art .fav{position:absolute;top:8px;right:9px;border:1px solid #3a4355;background:#0b0e17c9;border-radius:8px;color:#9baac2;width:32px;height:32px;font-size:17px}.fav.on{color:#ff7da0;border-color:#85445a}.game-info{padding:13px}.game-info h3{font-size:14px;margin:0 0 4px;overflow-wrap:anywhere}.game-info p{font-size:11px;color:var(--muted);margin:0 0 12px}.card-foot{display:flex;justify-content:space-between;align-items:center;gap:8px}.badge{font-size:10px;border-radius:6px;padding:4px 7px;border:1px solid #2e3b4c;color:#aebbd0;background:#131a26}.badge.ready{color:var(--green);border-color:#285d4c;background:#11251f}.badge.pending{color:var(--amber);border-color:#5a482d;background:#211c13}.badge.unsupported{color:#ff9cae;border-color:#613344;background:#24151b}.empty{border:1px dashed #303a4d;border-radius:14px;padding:28px;text-align:center;color:var(--muted);grid-column:1/-1}.empty strong{display:block;color:#e5ebf9;margin-bottom:5px}.game-panel{border:1px solid var(--line);border-radius:15px;overflow:hidden;background:#0b0d13}.game-panel-head{padding:13px 15px;display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid var(--line)}.player{min-height:240px;display:grid;place-items:center;text-align:center;padding:25px;background:radial-gradient(ellipse at 50% 45%,#18213a,#080a10 70%)}.player h3{margin:0 0 6px}.player p{max-width:600px;color:var(--muted);font-size:13px}.player iframe{border:0;width:100%;height:min(70vh,650px);background:#000}.player.fullscreen{min-height:70vh}.player-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.progress{height:5px;background:#242c3b;border-radius:20px;overflow:hidden;margin-top:12px}.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width .2s}
+.log{font-size:12px;color:var(--muted);margin-top:12px;white-space:pre-wrap;overflow-wrap:anywhere}.footer{border-top:1px solid #202637;margin-top:40px;padding-top:18px;color:#71809b;font-size:11px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+dialog{border:1px solid #35425b;border-radius:16px;background:#111622;color:var(--text);max-width:560px;width:calc(100% - 28px);padding:0;box-shadow:0 20px 90px #000b}dialog::backdrop{background:#02040ad9;backdrop-filter:blur(5px)}.modal-head{padding:17px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-body{padding:20px}.modal-body p,.modal-body li{font-size:13px;color:var(--muted)}.modal-body code{color:var(--cyan)}.modal-actions{display:flex;justify-content:end;gap:8px;padding:0 20px 20px}
+@media(max-width:1000px){.layout{grid-template-columns:72px minmax(0,1fr)}.sidebar{padding:20px 8px}.nav button{justify-content:center;padding:12px 4px;font-size:0}.nav .ico{font-size:18px}.nav-label,.side-note{display:none}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-mark{width:82px;height:82px;font-size:36px}}
+@media(max-width:650px){.topbar{height:60px;padding:0 13px}.status-pill{display:none}.layout{display:block}.sidebar{position:fixed;z-index:20;top:auto;bottom:0;left:0;right:0;width:100%;height:auto;min-height:0;padding:7px 6px calc(7px + env(safe-area-inset-bottom));background:#0b0e16f5;backdrop-filter:blur(14px);border-top:1px solid var(--line);border-right:0}.nav{grid-template-columns:repeat(4,1fr);gap:3px}.nav button{display:grid;gap:2px;justify-items:center;font-size:10px;padding:6px 2px}.nav .ico{font-size:17px;width:auto}.nav-label{display:none}main{padding:23px 14px 105px}.hero{align-items:flex-start}.hero-mark{display:none}.hero h1{font-size:32px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat{padding:12px}.stat strong{font-size:21px}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.game-art{height:90px}.game-info{padding:10px}.game-info h3{font-size:12px}.game-info p{font-size:10px}.card-foot{align-items:flex-start;flex-direction:column}.dropzone{padding:22px 13px}.section-head{align-items:flex-start;flex-direction:column}.toolbar{width:100%}.search{min-width:100%;}.filter{flex:1}.player{min-height:230px;padding:15px}.footer{margin-bottom:5px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <a class="brand" href="#" aria-label="Nuvi Games Import início"><span class="logo">N</span><span>NUVI GAMES <small>IMPORT / PLAY</small></span></a>
+  <div class="top-actions"><span class="status-pill"><span class="status-dot"></span>Biblioteca local</span><button class="button small" id="helpBtn">Como funciona?</button></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+  <div class="nav-label">BIBLIOTECA</div>
+  <nav class="nav" aria-label="Navegação principal">
+    <button class="active" data-view="all"><span class="ico">▦</span>Todos os jogos</button>
+    <button data-view="import"><span class="ico">⇧</span>Importar jogos</button>
+    <button data-view="favorites"><span class="ico">♡</span>Favoritos</button>
+    <button data-view="recent"><span class="ico">◷</span>Recentes</button>
+  </nav>
+  <div class="side-note"><strong>Seu espaço de jogos</strong>Os arquivos selecionados ficam no seu dispositivo nesta demonstração. Nada é enviado a uma IA automaticamente.</div>
+</aside>
+<main>
+  <section class="hero">
+    <div><div class="eyebrow">SUA BIBLIOTECA, DO SEU JEITO</div><h1>Seus jogos.<br><span style="background:linear-gradient(90deg,#72dfff,#8b7cff);background-clip:text;color:transparent">Direto no navegador.</span></h1><p>Importe arquivos, organize sua coleção e abra jogos HTML compatíveis sem instalar um programa externo. O suporte depende do formato e do motor de cada jogo.</p></div>
+    <div class="hero-mark" aria-hidden="true">⌘</div>
+  </section>
+
+  <section id="importSection">
+    <div class="section-head"><div><h2>Importar um jogo</h2><div class="sub">Selecione arquivos do seu dispositivo para analisar a compatibilidade.</div></div><span class="chip">Processamento local</span></div>
+    <div class="dropzone" id="dropzone">
+      <div class="upload-icon">⇧</div><h3>Arraste os arquivos para cá</h3><p>No celular, toque no botão abaixo e escolha o arquivo. Arquivos grandes podem consumir bastante memória do aparelho.</p>
+      <input id="fileInput" type="file" multiple accept=".html,.htm,.zip,.wasm,.json,.js,.css,.exe,.iso,.bin,.cue,.7z,.rar" class="hidden">
+      <button class="button primary" id="chooseBtn">＋ Selecionar arquivos</button>
+      <div class="formats"><span>HTML / HTM</span><span>ZIP</span><span>JS / WASM</span><span>EXE*</span><span>ISO*</span></div>
+    </div>
+    <div class="notice"><strong>Importante:</strong> importar não é converter. Arquivos EXE e ISO não viram HTML automaticamente. Para conversão por IA real, é necessário um serviço de backend, ferramentas específicas para cada motor e direitos de uso dos arquivos. Esta página não envia arquivos a nenhum servidor.</div>
+    <div id="importLog" class="log" aria-live="polite"></div>
+    <div class="progress hidden" id="progress"><div id="progressBar"></div></div>
+  </section>
+
+  <section class="stats" aria-label="Resumo da biblioteca">
+    <div class="stat"><span>Jogos na biblioteca</span><strong id="statTotal">0</strong><em>Importados neste navegador</em></div>
+    <div class="stat"><span>Prontos para abrir</span><strong id="statReady">0</strong><em>HTML reconhecido</em></div>
+    <div class="stat"><span>Favoritos</span><strong id="statFav">0</strong><em>Sua seleção</em></div>
+    <div class="stat"><span>Precisam de adaptação</span><strong id="statPending">0</strong><em>Compatibilidade não garantida</em></div>
+  </section>
+
+  <section class="section" id="librarySection">
+    <div class="section-head"><div><h2 id="libraryTitle">Sua biblioteca</h2><div class="sub" id="librarySub">Seus jogos importados aparecem aqui.</div></div><button class="button small ghost" id="clearSearch">Limpar busca</button></div>
+    <div class="toolbar"><div class="search"><input id="searchInput" type="search" placeholder="Buscar jogos..." aria-label="Buscar jogos"></div><select class="filter" id="typeFilter" aria-label="Filtrar por compatibilidade"><option value="all">Todos os formatos</option><option value="ready">HTML compatível</option><option value="pending">Analisar formato</option><option value="unsupported">Não executável diretamente</option></select></div>
+    <div class="cards" id="gameGrid" style="margin-top:14px"><div class="empty"><strong>Nenhum jogo importado ainda</strong>Selecione um arquivo acima para começar a montar sua biblioteca.</div></div>
+  </section>
+
+  <section class="section" id="playerSection">
+    <div class="section-head"><div><h2>Área de jogo</h2><div class="sub">Jogos HTML compatíveis podem abrir aqui; formatos binários precisam de um runtime apropriado.</div></div></div>
+    <div class="game-panel"><div class="game-panel-head"><strong id="playerTitle">Nenhum jogo selecionado</strong><button class="button small" id="fullscreenBtn" disabled>⛶ Tela cheia</button></div>
+      <div class="player" id="player"><div><div style="font-size:35px;color:#6b8ac6">▷</div><h3>Pronto quando você estiver</h3><p>Importe um arquivo HTML de jogo e selecione “Abrir”. Para jogos que dependem de múltiplos arquivos, bibliotecas ou recursos externos, é necessário preservar a estrutura completa do projeto.</p></div></div>
+    </div>
+  </section>
+  <footer class="footer"><span>NUVI GAMES IMPORT · Interface local</span><span>Use apenas jogos e arquivos que você tem direito de utilizar.</span></footer>
+</main>
+</div>
+</div>
+
+<dialog id="helpDialog">
+  <div class="modal-head"><strong>Como o Nuvi Games Import funciona</strong><button class="button small" id="closeHelp" aria-label="Fechar">✕</button></div>
+  <div class="modal-body">
+    <ol>
+      <li><b>Importar:</b> escolha arquivos do jogo no seu aparelho. A biblioteca é mantida durante a sessão desta página.</li>
+      <li><b>HTML:</b> um arquivo HTML autônomo pode ser aberto no player. Alguns jogos precisam de uma pasta inteira, recursos adicionais ou um servidor compatível.</li>
+      <li><b>ZIP / JS / WASM:</b> são identificados, mas não montados nem convertidos automaticamente por esta interface.</li>
+      <li><b>EXE / ISO:</b> não são HTML. Executá-los exige reimplementação do jogo, recompilação do código-fonte ou um runtime/emulador compatível. Não existe conversão universal sem erros.</li>
+      <li><b>IA real:</b> uma integração futura deve enviar apenas arquivos autorizados para um backend seguro, analisar o projeto, compilar/testar o resultado e informar claramente o que não foi convertido.</li>
+    </ol>
+    <p><b>Privacidade:</b> esta versão não faz upload de arquivos nem afirma realizar conversão por IA. Ela fornece a interface e a triagem inicial no navegador.</p>
+  </div><div class="modal-actions"><button class="button primary" id="understoodBtn">Entendi</button></div>
+</dialog>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const fileInput=$('fileInput'), dropzone=$('dropzone'), grid=$('gameGrid');
+  let games=[], activeGameId=null, currentView='all', activeObjectUrl=null, recentIds=[];
+  const supportedHTML = new Set(['html','htm']);
+  const pendingExt = new Set(['zip','js','css','wasm','json']);
+  const notDirect = new Set(['exe','iso','bin','cue','7z','rar']);
+  const extOf = name => (name.split('.').pop()||'').toLowerCase();
+  const fmtSize = n => n < 1024 ? n+' B' : n < 1048576 ? (n/1024).toFixed(1)+' KB' : (n/1048576).toFixed(1)+' MB';
+  const safe = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const idFor = () => (Date.now().toString(36)+Math.random().toString(36).slice(2,7));
+  function classify(file) {
+    const ext=extOf(file.name);
+    if(supportedHTML.has(ext)) return {kind:'ready',label:'HTML · abrir'};
+    if(pendingExt.has(ext)) return {kind:'pending',label:'Precisa montar'};
+    if(notDirect.has(ext)) return {kind:'unsupported',label:'Runtime necessário'};
+    return {kind:'pending',label:'Análise necessária'};
+  }
+  function log(message){ $('importLog').textContent=message; }
+  function updateStats(){
+    $('statTotal').textContent=games.length;
+    $('statReady').textContent=games.filter(g=>g.kind==='ready').length;
+    $('statFav').textContent=games.filter(g=>g.favorite).length;
+    $('statPending').textContent=games.filter(g=>g.kind!=='ready').length;
+  }
+  function visibleGames(){
+    const q=$('searchInput').value.trim().toLowerCase(), f=$('typeFilter').value;
+    return games.filter(g=>{
+      if(currentView==='favorites'&&!g.favorite)return false;
+      if(currentView==='recent'&&!recentIds.includes(g.id))return false;
+      if(f!=='all'&&g.kind!==f)return false;
+      return !q||g.name.toLowerCase().includes(q)||g.fileName.toLowerCase().includes(q);
+    });
+  }
+  function render(){
+    updateStats();
+    const titles={all:['Sua biblioteca','Seus jogos importados aparecem aqui.'],favorites:['Seus favoritos','Jogos que você marcou para encontrar mais rápido.'],recent:['Jogos recentes','Os últimos jogos abertos nesta sessão.'],import:['Importar jogos','Escolha arquivos acima para adicionar à biblioteca.']};
+    $('libraryTitle').textContent=titles[currentView][0]; $('librarySub').textContent=titles[currentView][1];
+    const list=visibleGames();
+    if(!list.length){grid.innerHTML='<div class="empty"><strong>'+ (games.length?'Nenhum resultado encontrado':'Nenhum jogo importado ainda')+'</strong>'+ (games.length?'Tente mudar a busca ou os filtros.':'Selecione um arquivo acima para começar a montar sua biblioteca.')+'</div>';return;}
+    grid.innerHTML=list.map(g=>{
+      const badge=g.kind==='ready'?'ready':g.kind==='pending'?'pending':'unsupported';
+      return `<article class="game-card"><div class="game-art"><span class="type badge">${safe(extOf(g.fileName).toUpperCase()||'ARQ')}</span><button class="fav ${g.favorite?'on':''}" data-fav="${g.id}" aria-label="${g.favorite?'Remover favorito':'Adicionar favorito'}">${g.favorite?'♥':'♡'}</button><span class="big-icon">${g.kind==='ready'?'▻':g.kind==='pending'?'◈':'⬡'}</span></div><div class="game-info"><h3>${safe(g.name)}</h3><p>${safe(g.fileName)} · ${fmtSize(g.size)}</p><div class="card-foot"><span class="badge ${badge}">${g.label}</span><button class="button small ${g.kind==='ready'?'primary':''}" data-open="${g.id}">${g.kind==='ready'?'Abrir':'Detalhes'}</button></div></div></article>`;
+    }).join('');
+    grid.querySelectorAll('[data-fav]').forEach(b=>b.addEventListener('click',()=>{const g=games.find(x=>x.id===b.dataset.fav);g.favorite=!g.favorite;render();}));
+    grid.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>selectGame(b.dataset.open)));
+  }
+  function addFiles(files){
+    const incoming=Array.from(files||[]);
+    if(!incoming.length)return;
+    let added=0, skipped=0;
+    for(const file of incoming){
+      if(games.some(g=>g.fileName===file.name&&g.size===file.size)){skipped++;continue;}
+      const c=classify(file);
+      games.unshift({id:idFor(),name:file.name.replace(/\.[^.]+$/,'')||file.name,fileName:file.name,size:file.size,file,kind:c.kind,label:c.label,favorite:false});
+      added++;
+    }
+    log(`${added} arquivo(s) adicionado(s) à biblioteca local.${skipped?' '+skipped+' duplicado(s) ignorado(s).':''} Nenhum arquivo foi enviado a um servidor ou convertido por IA.`);
+    render(); fileInput.value='';
+  }
+  function selectGame(id){
+    const g=games.find(x=>x.id===id);if(!g)return;
+    activeGameId=id;
+    if(!recentIds.includes(id))recentIds.unshift(id);
+    recentIds=recentIds.slice(0,20);
+    $('playerTitle').textContent=g.name;
+    $('fullscreenBtn').disabled=false;
+    const player=$('player'); player.classList.remove('fullscreen');
+    if(activeObjectUrl){URL.revokeObjectURL(activeObjectUrl);activeObjectUrl=null;}
+    if(g.kind==='ready'){
+      activeObjectUrl=URL.createObjectURL(g.file);
+      player.innerHTML=`<iframe title="${safe(g.name)}" src="${activeObjectUrl}" sandbox="allow-scripts allow-forms allow-pointer-lock allow-downloads" allow="fullscreen; gamepad; autoplay" referrerpolicy="no-referrer"></iframe>`;
+      log(`Arquivo HTML selecionado: ${g.fileName}. Se o jogo depender de outros arquivos relativos, esta visualização isolada pode não ser suficiente.`);
+    } else {
+      const why=g.kind==='pending'
+        ? 'Este formato pode conter recursos de um projeto web, mas precisa ser montado e verificado. A interface ainda não compila nem extrai automaticamente projetos ZIP.'
+        : 'Este formato não pode ser executado como HTML diretamente. É necessário um runtime apropriado ou reconstrução/recompilação autorizada do jogo; não há conversão automática garantida.';
+      player.innerHTML=`<div><div style="font-size:35px;color:#8a9ac0">◈</div><h3>${safe(g.name)}</h3><p>${safe(why)}</p><p><b>Arquivo:</b> ${safe(g.fileName)} · ${fmtSize(g.size)}</p><div class="player-actions"><button class="button" id="downloadOriginal">Exportar arquivo original</button><button class="button" id="showHelpFromPlayer">Ver limitações</button></div></div>`;
+      $('downloadOriginal').addEventListener('click',()=>{const u=URL.createObjectURL(g.file);const a=document.createElement('a');a.href=u;a.download=g.fileName;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);});
+      $('showHelpFromPlayer').addEventListener('click',()=> $('helpDialog').showModal());
+    }
+    render();
+    $('playerSection').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  $('chooseBtn').addEventListener('click',()=>fileInput.click());
+  fileInput.addEventListener('change',e=>addFiles(e.target.files));
+  ['dragenter','dragover'].forEach(ev=>dropzone.addEventListener(ev,e=>{e.preventDefault();dropzone.classList.add('drag');}));
+  ['dragleave','drop'].forEach(ev=>dropzone.addEventListener(ev,e=>{e.preventDefault();dropzone.classList.remove('drag');}));
+  dropzone.addEventListener('drop',e=>addFiles(e.dataTransfer.files));
+  $('searchInput').addEventListener('input',render);$('typeFilter').addEventListener('change',render);
+  $('clearSearch').addEventListener('click',()=>{$('searchInput').value='';$('typeFilter').value='all';render();});
+  document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{
+    currentView=b.dataset.view;
+    document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===b));
+    if(currentView==='import') $('importSection').scrollIntoView({behavior:'smooth',block:'start'});
+    else $('librarySection').scrollIntoView({behavior:'smooth',block:'start'});
+    render();
+  }));
+  $('fullscreenBtn').addEventListener('click',async()=>{
+    const target=$('player');
+    try{if(document.fullscreenElement)await document.exitFullscreen();else if(target.requestFullscreen)await target.requestFullscreen();else log('Tela cheia não está disponível neste navegador.');}
+    catch(e){log('O navegador bloqueou a tela cheia. Tente abrir o jogo e usar o menu do navegador.');}
+  });
+  $('helpBtn').addEventListener('click',()=>$('helpDialog').showModal());
+  $('closeHelp').addEventListener('click',()=>$('helpDialog').close());
+  $('understoodBtn').addEventListener('click',()=>$('helpDialog').close());
+  window.addEventListener('beforeunload',()=>{if(activeObjectUrl)URL.revokeObjectURL(activeObjectUrl);});
+  render();
+})();
+</script>
+</body>
+</html>
